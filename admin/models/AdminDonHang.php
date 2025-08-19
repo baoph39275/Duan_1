@@ -77,4 +77,24 @@ class AdminDonHang
         }
         
     }
+
+    public function updateDonHang($trang_thai_id, $id){
+        try{
+           
+            $sql = 'UPDATE don_hangs
+            SET
+            trang_thai_id = :trang_thai_id
+            WHERE id = :id
+            ';
+            $stmt = $this->conn->prepare($sql);
+            $stmt ->execute([
+                ':trang_thai_id' => $trang_thai_id,
+                ':id' => $id
+            ]);
+          
+            return true;
+        }catch (Exception $e){
+            echo "lỗi" . $e ->getMessage();
+        }
+    }
 }

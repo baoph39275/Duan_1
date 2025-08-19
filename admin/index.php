@@ -9,11 +9,14 @@ require_once '../commons/function.php'; // Hàm hỗ trợ
 require_once './controllers/AdminDanhmucController.php';
 require_once './controllers/AdminSanPhamController.php';
 require_once './controllers/AdminDonHangController.php';
+require_once './controllers/AdminBaoCaoThongKeController.php';
+require_once './controllers/AdminTaiKhoanController.php';
 
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
 require_once './models/AdminSanPham.php';
 require_once './models/AdminDonHang.php';
+require_once './models/AdminTaiKhoan.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -22,9 +25,8 @@ $act = $_GET['act'] ?? '/';
 // Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
 
 match ($act) {
-    '/' =>(function (){
-        echo 'Hello world';
-    })(),
+    // route báo cáo thống kê với trang chủ 
+    '/' => (new AdminBaoCaoThongKeController())->home(),
 
     // ROUTE danh muc 
     'danh-muc' => (new AdminDanhMucController())->danhSachDanhMuc(),
@@ -52,6 +54,14 @@ match ($act) {
     'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),
     'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
     'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(),
-    'xoa-don-hang' => (new AdminDonHangController())->deleteDonHang(),
+
+    // route quan li tài khoản 
+    // quản lí tài khoản quản trị 
+    
+    'list-tai-khoan-quan-tri'=>(new AdminTaiKhoanController())->danhSachQuanTri(),
+    'form-them-quan-tri' => (new AdminTaiKhoanController())->formAddQuanTri(),
+    'them-quan-tri' => (new AdminTaiKhoanController())->postAddQuanTri(),
+    'form-sua-quan-tri' => (new AdminTaiKhoanController())->formEditQuanTri(),
+    'sua-quan-tri' => (new AdminTaiKhoanController())->posteditQuanTri(), 
 
 };

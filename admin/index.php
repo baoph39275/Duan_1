@@ -35,8 +35,8 @@ match ($act) {
      'san-pham' => (new AdminSanPhamController())->danhSachSanPham(),
     'form-them-san-pham' => (new AdminSanPhamController())->formAddSanPham(),
     'them-san-pham' => (new AdminSanPhamController())->postAddSanPham(),
-    // 'form-sua-san-pham' => (new AdminSanPhamController())->formEditSanPham(),
-    // 'sua-san-pham' => (new AdminSanPhamController())->postEditAddSanPham(),
+    'form-sua-san-pham' => (new AdminSanPhamController())->formEditSanPham(),
+    'sua-san-pham' => (new AdminSanPhamController())->postEditAddSanPham(),
     // 'xoa-san-pham' => (new AdminSanPhamController())->deleteSanPham(),
 
 };

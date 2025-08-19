@@ -41,12 +41,12 @@ function deleteFile($file){
         unlink($pathDelete);
     }
 }
-// xóa session sau khi load trang  
 function deleteSessionError(){
     if(isset($_SESSION['flash'])){
+        // Hủy sesion sau khi đã tải trang
         unset($_SESSION['flash']);
         session_unset();
-        session_destroy();
+        // session_destroy();
     }
 }
 
@@ -62,4 +62,10 @@ function uploadFileAlbum($file, $folderload,$key){
 }
 function formatDate($date){
     return date("d-m-Y",strtotime($date));
+}
+function checkLoginAdmin(){
+    if(!isset($_SESSION['user_admin'])){
+        header("Location: ". BASE_URL_ADMIN . '?act=login-admin');
+        exit();
+    }
 }

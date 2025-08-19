@@ -30,7 +30,7 @@
           <div class="col-12">         
             <div class="card">
               <div class="card-header">
-                <a href="<?= BASE_URL_ADMIN . '?act=form-them-san-pham' ?>">
+                <a href="<?= BASE_URL_ADMIN . '?act=form-them-san-pham'?>">
                   <button class="btn btn-success">Thêm sản phẩm giày</button>
                 </a>
               </div>
@@ -56,16 +56,18 @@
                       <td><?= $sanPham['ten_san_pham']  ?></td>
                       <td>
                         <img src="<?= BASE_URL . $sanPham['hinh_anh']  ?>" style="width:100px" alt="" 
-                        onerror="this.onerror=null; this.src='https://product.hstatic.net/200000255805/product/z4473710787586_dd16ee0e88eafe7b9f63a6bbb58a10ac_fe0467cf864e4ad4ad20d8c1a87b30e3_master.jpg'">
+                        onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png'">
                       </td>
                       <td><?= $sanPham['gia_san_pham']  ?></td>
                       <td><?= $sanPham['so_luong']  ?></td>
                       <td><?= $sanPham['ten_danh_muc']  ?></td>
                       <td><?= $sanPham['trang_thai'] ==1 ? 'Còn bán':'Dừng bán'; ?></td>
                     <td>
-                      <a href="<?= BASE_URL_ADMIN . '?act=form-sua-san_pham&id_san_pham=' . $sanPham['id'] ?>">
+                      <a href="<?= BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham=' . $sanPham['id'] ?>">
                         <button class="btn btn-warning">sửa</button>
                       </a>
+                   <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']?>"><button class="btn btn-primary"><i class="far fa-eye"></i></button></a>
+
                       <a href="<?= BASE_URL_ADMIN . '?act=xoa-san-pham&id_san_pham=' . $sanPham['id'] ?>" 
                         onclick="return confirm('bạn có muốn xóa hay ko ')">
                         <button class="btn btn-danger">xóa</button>

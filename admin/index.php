@@ -20,7 +20,9 @@ require_once './models/AdminTaiKhoan.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
-
+if($act !== 'login-admin' && $act !== 'check-login-admin' && $act !== 'logout-admin'){
+    checkLoginAdmin();
+}
 
 // Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
 
@@ -62,6 +64,25 @@ match ($act) {
     'form-them-quan-tri' => (new AdminTaiKhoanController())->formAddQuanTri(),
     'them-quan-tri' => (new AdminTaiKhoanController())->postAddQuanTri(),
     'form-sua-quan-tri' => (new AdminTaiKhoanController())->formEditQuanTri(),
-    'sua-quan-tri' => (new AdminTaiKhoanController())->posteditQuanTri(), 
+    'sua-quan-tri' => (new AdminTaiKhoanController())->postEditQuanTri(), 
 
+    //Route reset password tài khoản
+
+    'reset-password' => (new AdminTaiKhoanController())->resetPassword(), 
+
+    // quản lý tài khoản khach hang 
+    'list-tai-khoan-khach-hang' => (new AdminTaiKhoanController)->danhSachKhachHang(),
+    'form-sua-khach-hang' => (new AdminTaiKhoanController)->formEditKhachHang(),
+    'sua-khach-hang' => (new AdminTaiKhoanController)->postEditKhachHang(),
+    'chi-tiet-khach-hang' => (new AdminTaiKhoanController())->detailKhachHang(),
+
+     //route quản lí tài khoản cá nhân (quản trị)
+    'form-sua-thong-tin-ca-nhan-quan-tri'=>(new AdminTaiKhoanController())->formEditCaNhanQuanTri(),
+    // 'sua-thong-tin-ca-nhan-quan-tri'=>(new AdminTaiKhoanController())->postEditCaNhanQuanTri(),
+    'sua-mat-khau-ca-nhan-quan-tri'=>(new AdminTaiKhoanController())->postEditMatKhauCaNhan(),
+
+    // route auth 
+    'login-admin' =>(new AdminTaiKhoanController())->formLogin(),
+    'check-login-admin' =>(new AdminTaiKhoanController())->login(),
+    'logout-admin' =>(new AdminTaiKhoanController())->logout(),
 };

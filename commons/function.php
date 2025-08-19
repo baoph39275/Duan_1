@@ -1,3 +1,4 @@
+
 <?php
 
 // Kết nối CSDL qua PDO
@@ -20,4 +21,45 @@ function connectDB() {
     } catch (PDOException $e) {
         echo ("Connection failed: " . $e->getMessage());
     }
+}
+// them file 
+function uploadFile($file, $folderUpload){
+    $pathStorage = $folderUpload . time() . $file['name'];
+
+    $from = $file['tmp_name'];
+    $to = PATH_ROOT . $pathStorage;
+
+    if (move_uploaded_file($from, $to)){
+        return $pathStorage;
+    }
+    return null;
+}
+// xoa file 
+function deleteFile($file){
+    $pathDelete = PATH_ROOT . $file;
+    if (file_exists($pathDelete)){
+        unlink($pathDelete);
+    }
+}
+// xóa session sau khi load trang  
+function deleteSessionError(){
+    if(isset($_SESSION['flash'])){
+        unset($_SESSION['flash']);
+        session_unset();
+        session_destroy();
+    }
+}
+
+function uploadFileAlbum($file, $folderload,$key){
+    $pathSorage = $folderload.time().$file['name'][$key];
+    $from = $file['tmp_name'][$key];
+    $to = PATH_ROOT.$pathSorage;
+    if(move_uploaded_file($from,$to)) {
+        return  $pathSorage;
+    }
+    return null;
+
+}
+function formatDate($date){
+    return date("d-m-Y",strtotime($date));
 }

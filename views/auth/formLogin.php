@@ -32,9 +32,9 @@
                         <div class="col-lg-12">
                             <div class="login-reg-form-wrap">
                                 <h5 class="text-center">Đăng nhập</h5>
-                                <?php if (isset($_SESSION['error'])) {  ?>
+                                <?php if (isset($_SESSION['error'])) { ?>
                                     <p class="text-danger login-box-msg text-center"><?= $_SESSION['error'] ?></p>
-                                            <?php } else { ?>
+                                    <?php } else { ?>
                                             <p class="login-box-msg text-center">Vui lòng đăng nhập</p>
                                     <?php  }?>
                                 <form action="<?= BASE_URL . '?act=check-login' ?>" method="post">

@@ -87,19 +87,16 @@ class DonHang
             return false;
         }
     }
-    public function getTrangThaiDonHang($taiKhoanid) {
+    public function getTrangThaiDonHang(){
         try {
             $sql = "SELECT * FROM trang_thai_don_hangs";
 
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                ':tai_khoan_id' => $taiKhoanid ,
-
-            ]);
+            $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }catch (Exception $e) {
             echo "Lỗi: " . $e->getMessage();
-
+            return false;
         }
     }
         public function getDonHangFromUser($taiKhoanid) {
@@ -117,19 +114,19 @@ class DonHang
 
         }
     }
-        public function getPhuongThucThanhToan($taiKhoanid) {
+        public function getPhuongThucThanhToan(){
         try {
-            $sql = "SELECT * FROM Phuong_thuc_thanh_toan ";
+            $sql = "SELECT * FROM phuong_thuc_thanh_toans";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }catch (Exception $e) {
             echo "Lỗi: " . $e->getMessage();
-
+            return false;
         }
     }
-            public function getDonHangById($donHangId) {
+    public function getDonHangById($donHangId) {
         try {
             $sql = "SELECT * FROM don_hangs WHERE id = :id";
 
@@ -140,8 +137,30 @@ class DonHang
             echo "Lỗi: " . $e->getMessage();
 
         }  
-  }  
-              public function updateTrangThaiDonHang($donHangId, $trangThaiID) {
+    }
+    public function getChiTietDonHangByDonHangId($donHangId){
+        try {
+            $sql = "SELECT 
+                        chi_tiet_don_hangs.*,
+                        san_phams.ten_san_pham,
+                        san_phams.hinh_anh
+                    FROM
+                        chi_tiet_don_hangs
+                    JOIN
+                        san_phams ON chi_tiet_don_hangs.san_pham_id = san_phams.id
+                    WHERE
+                        chi_tiet_don_hangs.don_hang_id = :don_hang_id";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':don_hang_id' => $donHangId]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }catch (Exception $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return false;
+        }
+    }  
+    public function updateTrangThaiDonHang($donHangId, $trangThaiID) {
         try {
             $sql = "UPDATE don_hangs SET trang_thai_id = :trang_thai_id WHERE id = :id";
 

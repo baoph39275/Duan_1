@@ -26,16 +26,9 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li><a href="<?= BASE_URL ?>">Trang chủ</i></a>
-                                                
-                                            </li>
-
-                                            <li><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>                                                    
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Giới thiệu</a></li>
+                                            <li><a href="<?= BASE_URL ?>">Trang chủ</i></a></li>
+                                            <li><a href="<?= BASE_URL . '?act=danh-sach-san-pham'?>">Sản phẩm</a></li>
+                                            <li><a href="<?= BASE_URL . '?act=gioi-thieu' ?>">Giới thiệu</a></li>
                                             <li><a href="#">Liên hệ</a></li>
                                         </ul>
                                     </nav>
@@ -72,14 +65,9 @@
                                                 <?php } else { ?>
                                                     <li><a href="my-account.html">Tài khoản</a></li>
                                                     <li><a href="<?= BASE_URL . '?act=lich-su-mua-hang' ?>">Đơn Hàng</a></li>
+                                                    <li><a href="<?= BASE_URL . '?act=gio-hang' ?>">Xem giỏ hàng</a></li>
                                                 <?php }?>
                                             </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="minicart-btn">
-                                                <i class="pe-7s-shopbag"></i>
-                                                <div class="notification">2</div>
-                                            </a>
                                         </li>
                                     </ul>
                                 </div>

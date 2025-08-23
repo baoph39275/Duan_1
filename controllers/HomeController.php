@@ -254,7 +254,7 @@ class HomeController
             $phuongThucThanhToan = array_column($arrPhuongThucThanhToan, 'ten_phuong_thuc', 'id');
 
             //lây danh sach tat cả đơn hàng của người dùng
-            $doHang = $this->modelDonHang->getDonHangFromUser($tai_khoan_id);
+            $donHangs = $this->modelDonHang->getDonHangFromUser($tai_khoan_id);
             require_once './views/lichSuMuaHang.php';
 
 ;
@@ -264,34 +264,93 @@ class HomeController
         }
 
     }
-        public function chiTietMuaHang (){
-        
-    }
-        public function huyDonHang (){
-         if (isset($_SESSION['user_client'])) {
-                     // Lấy thông tin người dùng từ session
+    public function chiTietMuaHang (){
+        if(isset($_SESSION['user_client'])){
+            // Lấy ra thoogn tin tài khoản đăng nhập
             $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
             $tai_khoan_id = $user['id'];
-            // Lấy Id truyền từ Url
-            $donHangId = $_GET['id'] ;
-            // Kiểm tra xem đơn hàng 
+
+
+            // lấy id đơn hàng truyền từ URL
+            $donHangId = $_GET['id'];
+
+            // lấy ra danh sách trạng thái đơn hàng
+            $arrTrangThaiDonHang = $this->modelDonHang->getTrangThaiDonHang();
+            $trangThaiDonHang = array_column($arrTrangThaiDonHang, 'ten_trang_thai', 'id');
+            
+
+            // lấy ra danh sách phương thức thanh toán
+            $arrPhuongThucThanhToan = $this->modelDonHang->getPhuongThucThanhToan();
+            $phuongThucThanhToan  = array_column($arrPhuongThucThanhToan , 'ten_phuong_thuc', 'id');
+
+            // lấy ra thoogn tin đơn hàng theo id
             $donHang = $this->modelDonHang->getDonHangById($donHangId);
-            if($donHang['tai_khoan_id'] != $tai_khoan_id){
-                echo('Bạn không có quyền hủy đơn hàng này');
+
+            // lấy thoogn tin sản phẩm của đợn hàng trong bảng chi tiết đơn hàng
+            $chiTietDonHang = $this->modelDonHang->getChiTietDonHangByDonHangId($donHangId);
+
+            // echo "<pre>";
+            // print_r($donHang);
+            // print_r($chiTietDonHang);
+
+            if ($donHang['tai_khoan_id'] != $tai_khoan_id) {
+                echo "Bạn không có quyền truy cập vào đơn hàng này";
                 exit;
             }
-            if ($donHang['tai_khoan_id'] != 1) {
-                echo('chỉ đơn hàng ở trạng thái "chưa xác nhận" mới có thể hủy đơn hàng');
+
+            require_once "./views/chiTietMuaHang.php";
+
+       }else{
+        require_once './views/auth/formLogin.php';
+       }    
+    }
+           public function huyDonHang(){
+        if(isset($_SESSION['user_client'])){
+             // Lấy ra thoogn tin tài khoản đăng nhập
+             $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+             $tai_khoan_id = $user['id'];
+
+
+             // lấy id đơn hàng truyền từ URL
+             $donHangId = $_GET['id'];
+
+             // kiểm tra đơn hàng
+             $donHang = $this->modelDonHang->getDonHangById($donHangId);
+
+             if($donHang['tai_khoan_id'] != $tai_khoan_id){
+                echo "Bạn không có quyền hủy đơn hàng này";
                 exit;
-            }
-            // Thực hiện hủy đơn hàng
-            $this->modelDonHang->updateTrangThaiDonHang($donHangId,11);
-            header("Location: " . BASE_URL . '?act=lich-su-mua-hang');
-            exit;
-;
-        } else {
-            var_dump('Bạn chưa đăng nhập'); 
-            die;
+             }
+
+             if($donHang['trang_thai_id'] != 1){
+                echo "Chỉ đơn hàng ở trạng thái chưa xác nhận mới có thể hủy";
+                exit;
+             }
+
+
+             // hủy đơn hàng
+             $this->modelDonHang->updateTrangThaiDonHang($donHangId, 11);
+             header("Location: " . BASE_URL . '?act=lich-su-mua-hang');
+             exit();
+        }else{
+            require_once './views/auth/formLogin.php';
         }
     }
+
+    public function danhSachSanPham(){
+        
+        $listSanPham = $this->modelSanPham->getDanhSachSanPham();
+    
+        // Kiểm tra xem có sản phẩm nào không
+        if ($listSanPham) {
+            // Đổ dữ liệu vào view
+            require_once "./views/danhSachSanPham.php";
+        } else {
+            echo "Không có sản phẩm nào.";
+        }
+    }
+    public function gioiThieu(){
+        require_once './views/gioiThieu.php';
+    }
+
 }
